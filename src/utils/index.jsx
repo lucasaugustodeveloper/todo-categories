@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
-import isAuthenticated from '@services/auth';
+import { isAuthenticated } from '@services/auth';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -14,5 +14,19 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       )}
   />
 );
+
+export const setToken = (name, value) => {
+  localStorage.setItem(name, value);
+
+  return { message: `${name} salve success` };
+};
+
+export const getToken = name => {
+  if (localStorage.getItem(name)) {
+    return localStorage.getItem(name);
+  }
+
+  return false;
+};
 
 export default PrivateRoute;

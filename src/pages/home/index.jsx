@@ -1,6 +1,9 @@
 import React from 'react';
 import { Container, Grid } from '@material-ui/core';
 
+// components
+import Login from '@components/login';
+
 import styles from './style';
 
 const App = () => {
@@ -16,7 +19,9 @@ const App = () => {
         justify="center"
         style={{ height: '100hv' }}
       >
-        <Grid item>item</Grid>
+        <Grid item>
+          <Login />
+        </Grid>
       </Grid>
     </Container>
   );
