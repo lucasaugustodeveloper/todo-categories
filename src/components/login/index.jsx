@@ -1,16 +1,19 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import { useHistory } from 'react-router-dom';
 import { Button, Grid, Input, InputAdornment, InputLabel } from '@material-ui/core';
 import { AccountCircle, VpnKeyRounded } from '@material-ui/icons';
 
-import { Login as RequestLogin } from '@services/auth';
-import { getToken } from '@utils';
+import { Login } from '@services/auth';
+import { setToken } from '@utils';
 
 import styles from './style';
 import LoginValidation from './validation';
 
-const Login = () => {
+const LoginPage = () => {
   const classes = styles();
+  const history = useHistory();
+  const changeRoute = () => history.push('/categories');
   const { handleBlur, handleChange, handleSubmit, resetForm, values, errors, touched } = useFormik({
     initialValues: {
       email: '',
@@ -18,12 +21,14 @@ const Login = () => {
     },
     validationSchema: LoginValidation,
     onSubmit(inputValues) {
-      RequestLogin(inputValues);
-      if (!getToken('token')) {
-        resetForm();
-      }
-
-      console.log('token já existe');
+      Login(inputValues)
+        .then(res => {
+          const { token } = res.data;
+          setToken('token', token);
+          resetForm();
+          changeRoute();
+        })
+        .catch(error => console.error('error => ', error));
     }
   });
 
@@ -91,4 +96,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
