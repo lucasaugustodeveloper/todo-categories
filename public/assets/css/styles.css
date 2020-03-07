@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+}
+
+*::after,
+*::before {
+  box-sizing: border-box;
+  content: '';
+  clear: both;
+  display: none;
+  visibility: hidden;
+}
+
+html,
+body {
+  background-color: #eaeaea;
+  height: 100%;
+  width: 100%;
+}
